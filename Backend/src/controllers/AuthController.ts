@@ -6,7 +6,6 @@ import { ApiResponse } from "../utils/ApiResponse";
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    // POST /api/auth/register
     register = async (req: Request, res: Response) => {
         // 1. Validate Input
         const validatedData = RegisterSchema.parse(req.body);
@@ -20,7 +19,6 @@ export class AuthController {
         );
     };
 
-    // POST /api/auth/login
     login = async (req: Request, res: Response) => {
         // 1. Validate Input
         const validatedData = LoginSchema.parse(req.body);
@@ -38,7 +36,6 @@ export class AuthController {
         res.status(200).json(new ApiResponse(200, user, "Login successful"));
     };
 
-    // POST /api/auth/logout
     logout = async (req: Request, res: Response) => {
         // Clear the cookie
         res.clearCookie("jwt");
