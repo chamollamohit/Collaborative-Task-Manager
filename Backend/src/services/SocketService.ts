@@ -18,9 +18,14 @@ class SocketService {
 
     // 2. Initialize Socket.io with the HTTP Server
     public init(httpServer: HttpServer) {
+        const allowedOrigin =
+            process.env.NODE_ENV === "production"
+                ? process.env.CORS_ORIGIN
+                : process.env.CORS_ORIGIN_LOCAL;
+
         this.io = new SocketIOServer(httpServer, {
             cors: {
-                origin: "*",
+                origin: allowedOrigin,
                 methods: ["GET", "POST", "PUT", "DELETE"],
                 credentials: true,
             },

@@ -19,9 +19,14 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: "16kb" }));
 app.use(cookieParser());
 
+const allowedOrigin =
+    process.env.NODE_ENV === "production"
+        ? process.env.CORS_ORIGIN
+        : process.env.CORS_ORIGIN_LOCAL;
+
 app.use(
     cors({
-        origin: "*",
+        origin: allowedOrigin,
         credentials: true,
     })
 );
