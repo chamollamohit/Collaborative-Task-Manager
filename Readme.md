@@ -69,7 +69,7 @@ We selected **PostgreSQL** managed via **Prisma ORM**.
 ### Prerequisites
 
 -   Node.js (v18+)
--   PostgreSQL (Local or Cloud URL)
+-   PostgreSQL (Local or Cloud URL) (If using Docker spin a container through DockerFile for Database)
 
 ### 1. Backend Setup
 
