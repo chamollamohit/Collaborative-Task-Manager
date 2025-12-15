@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "build": "npx prisma generate && tsc",
+        "build": "npx prisma migrate deploy && npx prisma generate && tsc",
         "start": "node dist/server.js",
         "dev": "nodemon ./src/server.ts",
         "test": "jest"
