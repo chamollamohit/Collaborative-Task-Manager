@@ -29,8 +29,8 @@ export class AuthController {
         // 3. Set Secure Cookie (Mandatory Requirement)
         res.cookie("jwt", token, {
             httpOnly: true, //(XSS protection)
-            sameSite: "strict", // CSRF protection
             maxAge: 24 * 60 * 60 * 1000, // 1 Day
+            secure: true,
         });
 
         res.status(200).json(new ApiResponse(200, user, "Login successful"));
