@@ -31,6 +31,7 @@ export class AuthController {
             httpOnly: true, //(XSS protection)
             maxAge: 24 * 60 * 60 * 1000, // 1 Day
             secure: true,
+            sameSite: "none",
         });
 
         res.status(200).json(new ApiResponse(200, user, "Login successful"));
