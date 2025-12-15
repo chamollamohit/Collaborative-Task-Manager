@@ -43,3 +43,9 @@ export interface CreateTaskData {
     dueDate?: string;
     assignedToId?: number;
 }
+
+export interface TaskCardProps {
+    task: Task;
+    onDelete: (id: number) => void;
+    onStatusChange: (id: number, newStatus: Task["status"]) => void;
+}

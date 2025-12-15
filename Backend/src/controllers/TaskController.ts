@@ -51,7 +51,8 @@ export class TaskController {
 
     delete = async (req: Request, res: Response) => {
         const id = Number(req.params.id);
-        await this.taskService.delete(id);
+        const userId = req.user!.id;
+        await this.taskService.delete(id, userId);
         socketService.emit("task:deleted", { id });
         res.status(200).json(
             new ApiResponse(200, {}, "Task deleted successfully")

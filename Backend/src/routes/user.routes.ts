@@ -5,13 +5,10 @@ import { UserRepository } from "../repositories/UserRepository";
 import { UserService } from "../services/UserService";
 
 const router = Router();
-
-// --- Dependency Injection ---
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-// --- Routes ---
 router.get("/", authenticate, userController.getAll);
 router.put("/profile", authenticate, userController.updateProfile);
 

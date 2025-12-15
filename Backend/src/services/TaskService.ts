@@ -32,14 +32,23 @@ export class TaskService {
         return await this.taskRepo.update(id, data);
     }
 
-    async delete(id: number) {
-        // 1. Check if task exists
-        const existingTask = await this.taskRepo.findById(id);
-        if (!existingTask) {
+    async delete(id: number, userId: number) {
+        // 1. Fetch the task to check ownership
+        const task = await this.taskRepo.findById(id);
+
+        if (!task) {
             throw new ApiError(404, "Task not found");
         }
 
-        // 2. Perform Delete
+        // 2. Authorization Check
+        if (task.creatorId !== userId) {
+            throw new ApiError(
+                403,
+                "You are not authorized to delete this task"
+            );
+        }
+
+        // 3. Delete
         return await this.taskRepo.delete(id);
     }
 }

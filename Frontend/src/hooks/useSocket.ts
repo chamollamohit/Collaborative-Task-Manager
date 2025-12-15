@@ -4,7 +4,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL =
+    import.meta.env.VITE_API_URL?.replace("/api", "") ||
+    "http://localhost:5000";
 
 export const useSocket = () => {
     const queryClient = useQueryClient();
@@ -56,9 +58,6 @@ export const useSocket = () => {
 
         socket.on("task:deleted", () => {
             queryClient.invalidateQueries({ queryKey: ["tasks"] });
-            toast.error("A task was deleted", {
-                duration: 5000,
-            });
         });
 
         return () => {

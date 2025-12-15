@@ -1,11 +1,6 @@
-import type { Task } from "../types";
+import type { TaskCardProps } from "../types";
 import clsx from "clsx";
-
-interface TaskCardProps {
-    task: Task;
-    onDelete: (id: number) => void;
-    onStatusChange: (id: number, newStatus: Task["status"]) => void;
-}
+import { useAuthStore } from "../store/useAuthStore";
 
 export const TaskCard = ({ task, onDelete, onStatusChange }: TaskCardProps) => {
     const priorityColors = {
@@ -14,6 +9,7 @@ export const TaskCard = ({ task, onDelete, onStatusChange }: TaskCardProps) => {
         HIGH: "bg-orange-100 text-orange-700",
         URGENT: "bg-red-100 text-red-700",
     };
+    const { user } = useAuthStore();
 
     const isOverdue =
         task.dueDate &&
@@ -37,19 +33,24 @@ export const TaskCard = ({ task, onDelete, onStatusChange }: TaskCardProps) => {
                     {task.priority}
                 </span>
 
-                <button
-                    onClick={() => onDelete(task.id)}
-                    className="text-slate-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
-                    title="Delete Task"
-                >
-                    🗑️
-                </button>
+                {user?.id === task.creatorId && (
+                    <button
+                        onClick={() => onDelete(task.id)}
+                        className="text-slate-300 hover:text-red-500 transition-colors cursor-pointer"
+                        title="Delete Task"
+                    >
+                        🗑️
+                    </button>
+                )}
             </div>
 
             <h3 className="font-bold text-lg text-main mb-1 truncate">
                 {task.title}
             </h3>
-            <p className="text-sm text-muted mb-4 line-clamp-2">
+            <p
+                className="text-sm text-muted mb-4 line-clamp-3 wrap-break-word"
+                title={task.description}
+            >
                 {task.description || "No description provided."}
             </p>
 
@@ -87,10 +88,10 @@ export const TaskCard = ({ task, onDelete, onStatusChange }: TaskCardProps) => {
                     }
                     className="w-full text-sm bg-slate-50 border border-slate-200 rounded-lg p-2 text-main focus:outline-none focus:ring-2 focus:ring-primary/20"
                 >
-                    <option value="TODO">📝 To Do</option>
-                    <option value="IN_PROGRESS">🚧 In Progress</option>
-                    <option value="REVIEW">👀 In Review</option>
-                    <option value="COMPLETED">✅ Completed</option>
+                    <option value="TODO">To Do</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="REVIEW">In Review</option>
+                    <option value="COMPLETED">Completed</option>
                 </select>
             </div>
         </div>

@@ -20,7 +20,7 @@ class SocketService {
     public init(httpServer: HttpServer) {
         this.io = new SocketIOServer(httpServer, {
             cors: {
-                origin: "http://localhost:5173",
+                origin: "*",
                 methods: ["GET", "POST", "PUT", "DELETE"],
                 credentials: true,
             },

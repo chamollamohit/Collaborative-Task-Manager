@@ -3,8 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
-import taskRoutes from "./routes/task.routes";
+import { errorHandler } from "./middlewares/error.middleware";
 import userRoutes from "./routes/user.routes";
+import taskRoutes from "./routes/task.routes";
 import { createServer } from "http";
 import { socketService } from "./services/SocketService";
 
@@ -12,7 +13,6 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
-
 const PORT = process.env.PORT || 5000;
 
 // --- Global Middleware ---
@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: "*",
         credentials: true,
     })
 );
@@ -35,6 +35,9 @@ app.use("/api/users", userRoutes);
 app.get("/", (req, res) => {
     res.send("Task Manager API is running");
 });
+
+// GLOBAL ERROR HANDLER
+app.use(errorHandler);
 
 // Initialize Socket.io
 socketService.init(httpServer);

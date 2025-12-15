@@ -16,7 +16,7 @@ const taskController = new TaskController(taskService);
 // All the Routes require a valid JWT cookie
 router.use(authenticate);
 
-// --- Routes ---
+// --- Define Routes ---
 router.post("/", taskController.create); // POST /api/tasks
 router.get("/", taskController.getAll); // GET /api/tasks
 router.get("/:id", taskController.getOne); // GET /api/tasks/:id
